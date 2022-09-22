@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val listDao = db.listDao()
-        val lists : List<ListItem> = ListDao.getAll()
-
-        Log.e("lists", lists.toString())
 
     }
 }
