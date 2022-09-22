@@ -1,17 +1,24 @@
 package com.xfactor.noted
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.xfactor.noted.database.AppDatabase
+import com.xfactor.noted.database.List
+import com.xfactor.noted.database.ListDao
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val db= Room.databaseBuilder(applicationContext, AppDatabase::class.java, "noted-database").build()
 
         // Setting ActionBar logo
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -27,6 +34,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_delete, R.id.navigation_listcontainer, R.id.navigation_newlist))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val listDao = db.listDao()
+        val lists : List<ListItem> = ListDao.getAll()
+
+        Log.e("lists", lists.toString())
 
     }
 }
